@@ -14,7 +14,7 @@ const Tips = () => {
   return (
     <>
       <div className="text-xl">tips</div>
-      <div className="border border-black h-[200px] w-full p-3 ">
+      <div className="border border-black h-[500px] w-full p-3 ">
         <div className="flex justify-center mt-2 ">
           <div className="w-1/2">
             <div className="flex mb-2">
@@ -32,7 +32,7 @@ const Tips = () => {
               {/* Onlineの金額を入力するフィールド */}
               <input
                 type="number"
-                step="0.01" // 小数点第2位まで入力可能に
+                step="0.10" // 小数点第2位まで入力可能に
                 value={onlineAmount === 0 ? "" : onlineAmount} // 入力が0の場合は空文字を表示
                 onChange={(e) => setOnlineAmount(parseFloat(e.target.value))}
               />
@@ -40,7 +40,7 @@ const Tips = () => {
           </div>
           {/* 合計金額を表示 */}
           <div className="flex items-center w-1/2">
-            <p className=" ml-5 text-lg">Total Amount:</p>
+            <p className=" ml-5 text-lg">Tip total:</p>
             <p className="ml-3 text-2xl">{calculateTotalAmount()}</p>
           </div>
         </div>
@@ -54,54 +54,60 @@ const Tips = () => {
 export default Tips;
 
 export const Staff = () => {
-  const [increment, setIncrement] = useState(0.25); // 増減する時間数
-
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "Staff 1", time: 6 },
-    { name: "Staff 2", time: 6 },
-    { name: "Staff 3", time: 6 },
-    { name: "Staff 4", time: 6 },
-    { name: "Staff 5", time: 6 },
-    { name: "Staff 6", time: 6 },
-    { name: "Staff 7", time: 6 },
-    { name: "Staff 8", time: 0 },
+    { name: "Staff 1", time: 6, break: 0 },
+    { name: "Staff 2", time: 6, break: 0 },
+    { name: "Staff 3", time: 6, break: 0 },
+    { name: "Staff 4", time: 6, break: 0 },
+    { name: "Staff 5", time: 6, break: 0 },
+    { name: "Staff 6", time: 6, break: 0 },
+    { name: "Staff 7", time: 6, break: 0 },
+    { name: "Staff 8", time: 0, break: 0 },
   ];
-
-  // スタッフの時間を増やす関数
-  const increaseTime = (index) => {
-    setStaffData((prevData) => {
-      const newData = [...prevData];
-      newData[index].time += increment;
-      return newData;
-    });
-  };
-
-  // スタッフの時間を減らす関数
-  const decreaseTime = (index) => {
-    setStaffData((prevData) => {
-      const newData = [...prevData];
-      if (newData[index].time - increment >= 0) {
-        newData[index].time -= increment;
-      }
-      return newData;
-    });
-  };
 
   // スタッフのデータを管理するState
   const [staffData, setStaffData] = useState(initialStaffData);
 
+  // 労働時間を計算する関数
+  const calculateWorkingHour = (staff) => {
+    const workingHour = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
+    return workingHour.toFixed(2); // 労働時間を小数点第2位まで表示
+  };
+
+  // 合計労働時間を計算する関数
+  const calculateTotalWorkingHour = () => {
+    let totalWorkingHour = 0;
+    staffData.forEach((staff) => {
+      totalWorkingHour += staff.time - staff.break / 60;
+    });
+    return totalWorkingHour.toFixed(2); // 合計労働時間を小数点第2位まで表示
+  };
+
   return (
     <>
       <div className="mt-6">
+        <div className="flex items-center mb-1">
+          <p className=" w-[64px] ml-[70px] text-center border border-black">
+            Hour
+          </p>
+          <p className=" w-[70px] ml-[18px] leading-4 text-center break-words  border border-black">
+            Break (mins)
+          </p>
+          <p className=" w-[70px] ml-[20px] leading-4 text-center break-words border border-black">
+            Working Hour
+          </p>
+          <p className=" w-[70px] ml-[50px] border border-black">Tips</p>
+          <p></p>
+        </div>
         {staffData.map((staff, index) => (
           <div key={index}>
-            <div className="flex items-center">
-              <p className="pr-3 w-[70px] mb-2">{staff.name}</p>
+            <div className="flex items-center mb-2">
+              <p className="pr-3 w-[70px]">{staff.name}</p>
               <input
-                className="w-[70px]"
+                className="w-[65px] pl-2"
                 type="number"
-                step="0.01"
+                step="0.25"
                 value={staff.time}
                 onChange={(e) => {
                   const newValue = parseFloat(e.target.value);
@@ -112,77 +118,38 @@ export const Staff = () => {
                   });
                 }}
               />
-              <div className="ml-3 flex gap-4">
-                {/* 時間数を増減させるボタン */}
-
-                <button onClick={() => increaseTime(index, 0.5)}>+0.5</button>
-                <button onClick={() => decreaseTime(index, 0.5)}>-0.5</button>
-                <button onClick={() => increaseTime(index, 0.25)}>+0.25</button>
-                <button onClick={() => decreaseTime(index, 0.25)}>-0.25</button>
-              </div>
+              <input
+                className="w-[65px] pl-3 ml-5"
+                type="number"
+                step="10"
+                value={staff.break}
+                onChange={(e) => {
+                  const newValue = parseFloat(e.target.value);
+                  setStaffData((prevData) => {
+                    const newData = [...prevData];
+                    newData[index].break = newValue;
+                    return newData;
+                  });
+                }}
+              />
+              <p className="pl-8 w-[100px]">{calculateWorkingHour(staff)}</p>
+              <p className="pl-3 w-[70px]">Tips:</p>
             </div>
           </div>
         ))}
+        <div className="flex items-center h-[40px] pl-14 border border-black">
+          <p className="text-[18px]">
+            Total Hour:
+            <span className="text-lg font-bold pl-4 pr-1 underline">
+              {calculateTotalWorkingHour()}
+            </span>
+          </p>
+          <p className="pl-8 text-[18px]">
+            Tips:
+            <span className="text-lg font-bold pl-4 pr-1 underline">$</span>
+          </p>
+        </div>
       </div>
     </>
   );
 };
-
-// export const Staff = () => {
-//   const [staff1, setStaff1] = useState(6);
-//   const [staff2, setStaff2] = useState(0);
-//   const [staff3, setStaff3] = useState(0);
-//   const [staff4, setStaff4] = useState(0);
-//   const [staff5, setStaff5] = useState(0);
-//   const [staff6, setStaff6] = useState(0);
-//   const [staff7, setStaff7] = useState(0);
-//   const [staff8, setStaff8] = useState(0);
-
-//   const [increment, setIncrement] = useState(0.25); // 増減する時間数
-
-//   // 働いた時間数を増やす関数
-//   const increaseTime = () => {
-//     setStaff1((prevTime) => prevTime + increment);
-//   };
-
-//   // 働いた時間数を減らす関数
-//   const decreaseTime = () => {
-//     if (staff1 - increment >= 0) {
-//       setStaff1((prevTime) => prevTime - increment);
-//     }
-//   };
-//   return (
-//     <>
-//       <div className="mt-6">
-//         <div>
-//           <div className="flex">
-//             <p className="pr-3">Staff 1</p>
-//             <input
-//               className="w-[70px]"
-//               type="number"
-//               step="0.01" // 小数点第2位まで入力可能に
-//               value={staff1 === 0 ? "" : staff1} // 入力が0の場合は空文字を表示
-//               onChange={(e) => setStaff1(parseFloat(e.target.value))}
-//             />
-//             <div className="ml-3">
-//               {/* 時間数を増減させるボタン */}
-
-//               <button onClick={() => setStaff1((prevTime) => prevTime + 0.5)}>
-//                 +0.5
-//               </button>
-//               <button onClick={() => setStaff1((prevTime) => prevTime - 0.5)}>
-//                 -0.5
-//               </button>
-//               <button onClick={() => setStaff1((prevTime) => prevTime + 0.25)}>
-//                 +0.25
-//               </button>
-//               <button onClick={() => setStaff1((prevTime) => prevTime - 0.25)}>
-//                 -0.25
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
