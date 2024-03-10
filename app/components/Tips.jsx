@@ -13,7 +13,7 @@ const Tips = () => {
 
   return (
     <>
-      <div className="text-xl">tips</div>
+      <div className="pt-3"></div>
       <div className="border border-black h-[500px] w-full p-3 ">
         <div className="flex justify-center mt-2 ">
           <div className="w-1/2">
@@ -109,22 +109,20 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className=" w-[64px] ml-[70px] text-center border border-black">
-            Hour
-          </p>
-          <p className=" w-[70px] ml-[18px] leading-4 text-center break-words  border border-black">
+          <p className=" w-[64px] ml-[50px] md:ml-[70px] text-center ">Hour</p>
+          <p className=" w-[70px] ml-[15px] md:ml-[18px] leading-4 text-center break-words  ">
             Break (mins)
           </p>
-          <p className=" w-[70px] ml-[20px] leading-4 text-center break-words border border-black">
+          <p className=" w-[70px] ml-[15px] md:ml-[20px] leading-4 text-center break-words ">
             Working Hour
           </p>
-          <p className=" w-[70px] ml-[30px] border border-black">Tips</p>
+          <p className=" w-[50px] ml-[27px] md:ml-[30px] ">Tips</p>
           <p></p>
         </div>
         {staffData.map((staff, index) => (
           <div key={index}>
-            <div className="flex items-center mb-2">
-              <p className="pr-3 w-[70px]">{staff.name}</p>
+            <div className="flex items-center mb-2 ">
+              <p className="pr-1 md:pr-3 w-[70px] text-sm">{staff.name}</p>
               <input
                 className="w-[65px] pl-2"
                 type="number"
@@ -153,10 +151,12 @@ export const Staff = ({ tipTotal }) => {
                   });
                 }}
               />
-              <p className="pl-8 w-[100px]">{calculateWorkingHour(staff)}</p>
+              <p className="pl-5 md:pl-8 w-[100px]">
+                {calculateWorkingHour(staff)}
+              </p>
               {/* <p className="pl-3 w-[70px]">Tips: </p> */}
               {/* ////////////////////////////////////////////// */}
-              <p className="pl-3 w-[100px] border border-black">
+              <p className="pl-2 md:pl-3 w-[100px] border border-black">
                 $ {""}
                 {(
                   calculateTipsPerHour() *
@@ -176,14 +176,14 @@ export const Staff = ({ tipTotal }) => {
             </div>
           </div>
         ))}
-        <div className="flex items-center h-[40px] pl-14 border border-black">
-          <p className="text-[18px]">
+        <div className="flex items-center mt-5 md:mt-0 h-[60px] md:h-[40px] pl-2 md:pl-14 border border-black">
+          <p className="text-[18px] leading-3">
             Total Hour:
             <span className="text-lg font-bold pl-4 pr-1 underline">
               {calculateTotalWorkingHour()} h
             </span>
           </p>
-          <p className="pl-8 text-[18px]">
+          <p className="pl-8 text-[18px] leading-3">
             Tips/h:
             <span className="text-lg font-bold pl-4 pr-1 underline">
               $ {calculateTipsPerHour()}
