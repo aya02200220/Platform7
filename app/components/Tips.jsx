@@ -13,7 +13,7 @@ const Tips = () => {
 
   return (
     <>
-      <div className="pt-3"></div>
+      <div className="pt-10 md:pt-3"></div>
       <div className="border border-black h-[500px] w-full p-3 ">
         <div className="flex justify-center mt-2 ">
           <div className="w-1/2">
