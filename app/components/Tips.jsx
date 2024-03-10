@@ -60,13 +60,13 @@ export default Tips;
 export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "Staff 1", time: 6, break: 0 },
-    { name: "Staff 2", time: 6, break: 0 },
-    { name: "Staff 3", time: 6, break: 0 },
-    { name: "Staff 4", time: 6, break: 0 },
-    { name: "Staff 5", time: 6, break: 0 },
-    { name: "Staff 6", time: 6, break: 0 },
-    { name: "Staff 7", time: 6, break: 0 },
+    { name: "Staff 1", time: 6.5, break: 0 },
+    { name: "Staff 2", time: 6.5, break: 0 },
+    { name: "Staff 3", time: 7, break: 0 },
+    { name: "Staff 4", time: 7, break: 0 },
+    { name: "Staff 5", time: 7, break: 0 },
+    { name: "Staff 6", time: 7, break: 0 },
+    { name: "Staff 7", time: 7, break: 0 },
     { name: "Staff 8", time: 0, break: 0 },
   ];
 
