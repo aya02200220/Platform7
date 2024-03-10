@@ -11,7 +11,7 @@ export default function Home() {
       </div>
 
       <Tips />
-      <p className="fixed bottom-0 right-0 mb-4 mr-4">
+      <p className="fixed bottom-0 right-0 mb-4 mr-4 text-[10px] md:text-[20px]">
         Created by Aya Ishimura ♡
       </p>
     </main>
