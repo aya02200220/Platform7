@@ -20,7 +20,9 @@ const Tips = () => {
             <div className="flex mb-2">
               <p className="w-[55px]">Cash</p>
               {/* Cashの金額を入力するフィールド */}
+              $
               <input
+                className="ml-1 pl-2 w-[100px]"
                 type="number"
                 step="0.01" // 小数点第2位まで入力可能に
                 value={cashAmount === 0 ? "" : cashAmount} // 入力が0の場合は空文字を表示
@@ -30,7 +32,9 @@ const Tips = () => {
             <div className="flex">
               <p className="w-[55px]">Online</p>
               {/* Onlineの金額を入力するフィールド */}
+              $
               <input
+                className="ml-1 pl-2 w-[100px]"
                 type="number"
                 step="0.10" // 小数点第2位まで入力可能に
                 value={onlineAmount === 0 ? "" : onlineAmount} // 入力が0の場合は空文字を表示
@@ -45,7 +49,7 @@ const Tips = () => {
           </div>
         </div>
 
-        <Staff />
+        <Staff tipTotal={calculateTotalAmount()} />
       </div>
     </>
   );
@@ -53,7 +57,7 @@ const Tips = () => {
 
 export default Tips;
 
-export const Staff = () => {
+export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
     { name: "Staff 1", time: 6, break: 0 },
@@ -84,6 +88,23 @@ export const Staff = () => {
     return totalWorkingHour.toFixed(2); // 合計労働時間を小数点第2位まで表示
   };
 
+  // 合計チップを合計労働時間で割って１時間あたりのチップを計算する関数
+  const calculateTipsPerHour = () => {
+    const tipTotalNumeric = parseFloat(tipTotal);
+    const totalWorkingHourNumeric = parseFloat(calculateTotalWorkingHour());
+
+    if (totalWorkingHourNumeric === 0) {
+      return 0;
+    }
+
+    return (tipTotalNumeric / totalWorkingHourNumeric).toFixed(2);
+  };
+
+  // 小数点第2位を5区切りで丸める関数
+  const roundToNearest5Cents = (value) => {
+    return Math.ceil(value * 20) / 20;
+  };
+
   return (
     <>
       <div className="mt-6">
@@ -97,7 +118,7 @@ export const Staff = () => {
           <p className=" w-[70px] ml-[20px] leading-4 text-center break-words border border-black">
             Working Hour
           </p>
-          <p className=" w-[70px] ml-[50px] border border-black">Tips</p>
+          <p className=" w-[70px] ml-[30px] border border-black">Tips</p>
           <p></p>
         </div>
         {staffData.map((staff, index) => (
@@ -133,7 +154,25 @@ export const Staff = () => {
                 }}
               />
               <p className="pl-8 w-[100px]">{calculateWorkingHour(staff)}</p>
-              <p className="pl-3 w-[70px]">Tips:</p>
+              {/* <p className="pl-3 w-[70px]">Tips: </p> */}
+              {/* ////////////////////////////////////////////// */}
+              <p className="pl-3 w-[100px] border border-black">
+                $ {""}
+                {(
+                  calculateTipsPerHour() *
+                  (staff.time - staff.break / 60)
+                ).toFixed(2)}
+              </p>
+              {/* <p className="pl-3 w-[70px]">
+                $
+                {Math.round(
+                  calculateTipsPerHour() * (staff.time - staff.break / 60)
+                ).toFixed(2)}
+              </p> */}
+
+              {/* ////////////////////////////////////////////// */}
+
+              {/* ////////////////////////////////////////////// */}
             </div>
           </div>
         ))}
@@ -141,12 +180,14 @@ export const Staff = () => {
           <p className="text-[18px]">
             Total Hour:
             <span className="text-lg font-bold pl-4 pr-1 underline">
-              {calculateTotalWorkingHour()}
+              {calculateTotalWorkingHour()} h
             </span>
           </p>
           <p className="pl-8 text-[18px]">
-            Tips:
-            <span className="text-lg font-bold pl-4 pr-1 underline">$</span>
+            Tips/h:
+            <span className="text-lg font-bold pl-4 pr-1 underline">
+              $ {calculateTipsPerHour()}
+            </span>
           </p>
         </div>
       </div>
