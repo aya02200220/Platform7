@@ -16,7 +16,7 @@ function CurrentDate() {
 
   return (
     <div>
-      <p>{currentDate}</p>
+      <p className="text-lg">{currentDate}</p>
     </div>
   );
 }
