@@ -149,15 +149,19 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className="text-[15px] md:text-[16px] w-[80px] ml-[48px] md:ml-[70px] leading-4 text-center break-words ">
+          <p className="text-[15px] md:text-[16px] w-[80px] ml-[48px] md:ml-[70px] leading-4 text-center break-words">
             Hour{" "}
             <span className="text-[11px] leading-[5px]">
               <br />
               (30min →0.5)
             </span>
           </p>
-          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[18px] leading-4  break-words  ">
-            Break (mins)
+          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[10px] leading-4  break-words">
+            Break
+            <span className="text-[11px] leading-[5px]">
+              <br />
+              (mins)
+            </span>
           </p>
           <p className="text-[15px] md:text-[16px] w-[70px] ml-[5px] md:ml-[20px] leading-4 text-center break-words ">
             Working Hour
@@ -185,7 +189,7 @@ export const Staff = ({ tipTotal }) => {
                 }}
               />
               <input
-                className="w-[50px] pl-3 ml-2"
+                className="w-[50px] pl-3 ml-2 md:ml-7"
                 type="number"
                 step="10"
                 value={staff.break}
