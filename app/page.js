@@ -1,5 +1,6 @@
 import CurrentDate from "./components/currentDate";
 import Tips from "./components/Tips";
+import { Note } from "./components/Note";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       </div>
 
       <Tips />
+      <Note />
       <p className="fixed bottom-0 right-0 mb-4 mr-4 text-[10px] md:text-[20px]">
         ♡ Created by Aya ♡
       </p>
