@@ -30,7 +30,7 @@ const Tips = () => {
               />
             </div>
             <div className="flex">
-              <p className="w-[55px]">Online</p>
+              <p className="text-[15px] w-[55px]">Online</p>
               {/* Onlineの金額を入力するフィールド */}
               $
               <input
@@ -44,7 +44,7 @@ const Tips = () => {
           </div>
           {/* 合計金額を表示 */}
           <div className="flex items-center w-3/5">
-            <p className=" ml-5 text-lg leading-5">Tip total:</p>
+            <p className=" ml-4 text-lg leading-5">Tip total:</p>
             <p className="ml-4 text-2xl border border-b-8 border-b-red-300">
               $ {calculateTotalAmount()}
             </p>
@@ -149,24 +149,29 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className=" w-[80px] ml-[50px] md:ml-[70px] leading-4 text-center break-words ">
-            Hour <span className="text-[12px] leading-[5px]">(30min →0.5)</span>
+          <p className="text-[15px] md:text-[16px] w-[80px] ml-[48px] md:ml-[70px] leading-4 text-center break-words ">
+            Hour{" "}
+            <span className="text-[11px] leading-[5px]">
+              <br />
+              (30min →0.5)
+            </span>
           </p>
-          <p className=" w-[70px] ml-[8px] md:ml-[18px] leading-4 text-center break-words  ">
+          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[18px] leading-4  break-words  ">
             Break (mins)
           </p>
-          <p className=" w-[70px] ml-[5px] md:ml-[20px] leading-4 text-center break-words ">
+          <p className="text-[15px] md:text-[16px] w-[70px] ml-[5px] md:ml-[20px] leading-4 text-center break-words ">
             Working Hour
           </p>
-          <p className=" w-[50px] ml-[27px] md:ml-[30px] ">Tips</p>
-          <p></p>
+          <p className="text-[15px] md:text-[16px] w-[50px] ml-[20px] md:ml-[30px] ">
+            Tips
+          </p>
         </div>
         {staffData.map((staff, index) => (
           <div key={index}>
             <div className="flex items-center mb-2 ">
               <p className="pr-1 md:pr-3 w-[70px] text-[12px]">{staff.name}</p>
               <input
-                className="w-[65px] pl-2"
+                className="w-[60px] pl-2"
                 type="number"
                 step="0.25"
                 value={staff.time}
@@ -180,7 +185,7 @@ export const Staff = ({ tipTotal }) => {
                 }}
               />
               <input
-                className="w-[65px] pl-3 ml-5"
+                className="w-[50px] pl-3 ml-2"
                 type="number"
                 step="10"
                 value={staff.break}
@@ -213,13 +218,13 @@ export const Staff = ({ tipTotal }) => {
           </div>
         ))}
         <div className="flex items-center mt-5 md:mt-8 h-[60px] md:h-[40px] pl-2 md:pl-14 border border-black">
-          <p className="text-[18px] leading-3">
+          <p className="text-[16px] leading-3">
             Total Hour:
             <span className="text-lg font-bold pl-4 pr-1 underline">
               {calculateTotalWorkingHour()} h
             </span>
           </p>
-          <p className="pl-4 text-[18px] leading-3">
+          <p className="pl-4 text-[16px] leading-3">
             Tips/h:
             <span className="text-lg font-bold pl-4 pr-1 underline">
               $ {calculateTipsPerHour()}
