@@ -82,27 +82,10 @@ export const Staff = ({ tipTotal }) => {
   // };
 
   // 労働時間を計算する関数
-  const calculateWorkingHour = (staff) => {
-    const BK = staff.break > 0 ? staff.break : 0;
-
-    const workingHourAfterBK = staff.time - BK; // breakを時間に変換して労働時間から引く
-    const workingHours = Math.floor(workingHourAfterBK); // 整数部分（時間）を取得
-    let minutes = Math.round((workingHourAfterBK - workingHours) * 60); // 小数部分（分）を取得
-
-    if (workingHours === 0 && minutes === 0) {
-      return "-";
-    } else {
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
-      }
-      return `${workingHours}:${minutes}`; // 時間と分を連結して返す
-    }
-  };
-  // // 労働時間を計算する関数
   // const calculateWorkingHour = (staff) => {
   //   const BK = staff.break > 0 ? staff.break : 0;
 
-  //   const workingHourAfterBK = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
+  //   const workingHourAfterBK = staff.time - BK; // breakを時間に変換して労働時間から引く
   //   const workingHours = Math.floor(workingHourAfterBK); // 整数部分（時間）を取得
   //   let minutes = Math.round((workingHourAfterBK - workingHours) * 60); // 小数部分（分）を取得
 
@@ -115,12 +98,31 @@ export const Staff = ({ tipTotal }) => {
   //     return `${workingHours}:${minutes}`; // 時間と分を連結して返す
   //   }
   // };
+  // 労働時間を計算する関数
+  const calculateWorkingHour = (staff) => {
+    const BK = staff.break > 0 ? staff.break : 0;
+
+    // const workingHourAfterBK = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
+    const workingHourAfterBK = staff.time - BK / 60; // breakを時間に変換して労働時間から引く
+    const workingHours = Math.floor(workingHourAfterBK); // 整数部分（時間）を取得
+    let minutes = Math.round((workingHourAfterBK - workingHours) * 60); // 小数部分（分）を取得
+
+    if (workingHours === 0 && minutes === 0) {
+      return "-";
+    } else {
+      if (minutes < 10) {
+        minutes = `0${minutes}`;
+      }
+      return `${workingHours}:${minutes}`; // 時間と分を連結して返す
+    }
+  };
 
   // 合計労働時間を計算する関数
   const calculateTotalWorkingHour = () => {
     let totalWorkingHour = 0;
     staffData.forEach((staff) => {
       const BK = staff.break > 0 ? staff.break : 0;
+
       totalWorkingHour += staff.time - BK / 60;
     });
     return totalWorkingHour.toFixed(2); // 合計労働時間を小数点第2位まで表示
@@ -198,6 +200,10 @@ export const Staff = ({ tipTotal }) => {
               {/* ////////////////////////////////////////////// */}
               <p className="pl-2 md:pl-3 w-[100px] border border-black">
                 $ {""}
+                {/* {(
+                  calculateTipsPerHour() *
+                  (staff.time - staff.break / 60)
+                ).toFixed(2)} */}
                 {(
                   calculateTipsPerHour() *
                   (staff.time - (staff.break > 0 ? staff.break : 0) / 60)
