@@ -60,14 +60,14 @@ export default Tips;
 export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "Staff 1", time: 6.5, break: 0 },
-    { name: "Staff 2", time: 6.5, break: 0 },
-    { name: "Staff 3", time: 7, break: 0 },
-    { name: "Staff 4", time: 7, break: 0 },
-    { name: "Staff 5", time: 7, break: 0 },
-    { name: "Staff 6", time: 7, break: 0 },
-    { name: "Staff 7", time: 7, break: 0 },
-    { name: "Staff 8", time: 0, break: 0 },
+    { name: "OPEN 1", time: 6.5, break: 0 },
+    { name: "OPEN 2", time: 6.5, break: 0 },
+    { name: "1 SWING", time: 6, break: 0 },
+    { name: "2 SWING", time: 6, break: 0 },
+    { name: "CLOSE 1", time: 7, break: 0 },
+    { name: "CLOSE 2", time: 7, break: 0 },
+    { name: "KITCHEN", time: 7, break: 20 },
+    { name: "OTHER 1", time: 0, break: 0 },
   ];
 
   // スタッフのデータを管理するState
@@ -109,7 +109,9 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className=" w-[64px] ml-[50px] md:ml-[70px] text-center ">Hour</p>
+          <p className=" w-[80px] ml-[50px] md:ml-[70px] leading-4 text-center break-words ">
+            Hour <span className="text-[12px] leading-[5px]">(30min →0.5)</span>
+          </p>
           <p className=" w-[70px] ml-[15px] md:ml-[18px] leading-4 text-center break-words  ">
             Break (mins)
           </p>
@@ -122,7 +124,7 @@ export const Staff = ({ tipTotal }) => {
         {staffData.map((staff, index) => (
           <div key={index}>
             <div className="flex items-center mb-2 ">
-              <p className="pr-1 md:pr-3 w-[70px] text-sm">{staff.name}</p>
+              <p className="pr-1 md:pr-3 w-[70px] text-[12px]">{staff.name}</p>
               <input
                 className="w-[65px] pl-2"
                 type="number"
@@ -176,7 +178,7 @@ export const Staff = ({ tipTotal }) => {
             </div>
           </div>
         ))}
-        <div className="flex items-center mt-5 md:mt-0 h-[60px] md:h-[40px] pl-2 md:pl-14 border border-black">
+        <div className="flex items-center mt-5 md:mt-8 h-[60px] md:h-[40px] pl-2 md:pl-14 border border-black">
           <p className="text-[18px] leading-3">
             Total Hour:
             <span className="text-lg font-bold pl-4 pr-1 underline">
