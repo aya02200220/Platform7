@@ -169,7 +169,7 @@ export const Staff = ({ tipTotal }) => {
               (mins)
             </span>
           </p>
-          <p className="text-[14px] md:text-[16px] w-[70px] ml-[10px] md:ml-[37px] leading-3 text-center break-words ">
+          <p className="text-[14px] md:text-[16px] w-[70px] ml-[6px] md:ml-[37px] leading-3 text-center break-words ">
             Working Hour
           </p>
           <p className="text-[15px] md:text-[16px] w-[50px] ml-[20px] md:ml-[50px] ">
