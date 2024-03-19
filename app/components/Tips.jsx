@@ -14,7 +14,7 @@ const Tips = () => {
   return (
     <>
       <div className="pt-10 md:pt-3"></div>
-      <div className="border border-black h-[500px] w-full p-3 ">
+      <div className="border border-black  w-full p-3 ">
         <div className="flex justify-center mt-2 ">
           <div className="w-2/5">
             <div className="flex mb-2">
@@ -45,7 +45,7 @@ const Tips = () => {
           {/* 合計金額を表示 */}
           <div className="flex items-center w-3/5">
             <p className=" ml-4 text-lg leading-5">Tip total:</p>
-            <p className="ml-4 text-2xl border border-b-8 border-b-red-300">
+            <p className="ml-2 text-2xl border border-b-8 border-b-red-300">
               $ {calculateTotalAmount()}
             </p>
           </div>
@@ -62,8 +62,8 @@ export default Tips;
 export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "OPEN 1", time: 6.5, break: 0 },
-    { name: "OPEN 2", time: 6.5, break: 0 },
+    { name: "OPEN 1", time: 5.5, break: 0 },
+    { name: "OPEN 2", time: 5.5, break: 0 },
     { name: "1 SWING", time: 6, break: 0 },
     { name: "2 SWING", time: 6, break: 0 },
     { name: "CLOSE 1", time: 7, break: 0 },
@@ -117,6 +117,12 @@ export const Staff = ({ tipTotal }) => {
     }
   };
 
+  // 労働時間を計算する関数
+  const calculateWorkingHour2 = (staff) => {
+    const workingHour = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
+    return workingHour.toFixed(2); // 労働時間を小数点第2位まで表示
+  };
+
   // 合計労働時間を計算する関数
   const calculateTotalWorkingHour = () => {
     let totalWorkingHour = 0;
@@ -149,21 +155,21 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className="text-[15px] md:text-[16px] w-[80px] ml-[48px] md:ml-[70px] leading-4 text-center break-words">
+          <p className="text-[15px] md:text-[16px] w-[80px] ml-[55px] md:ml-[70px] leading-4 text-center break-words">
             Hour{" "}
             <span className="text-[11px] leading-[5px]">
               <br />
               (30min →0.5)
             </span>
           </p>
-          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[10px] leading-4  break-words">
+          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[10px] leading-4 break-words flex flex-col items-center">
             Break
             <span className="text-[11px] leading-[5px]">
               <br />
               (mins)
             </span>
           </p>
-          <p className="text-[15px] md:text-[16px] w-[70px] ml-[5px] md:ml-[20px] leading-4 text-center break-words ">
+          <p className="text-[14px] md:text-[16px] w-[70px] ml-[10px] md:ml-[20px] leading-3 text-center break-words ">
             Working Hour
           </p>
           <p className="text-[15px] md:text-[16px] w-[50px] ml-[20px] md:ml-[30px] ">
@@ -202,12 +208,14 @@ export const Staff = ({ tipTotal }) => {
                   });
                 }}
               />
-              <p className="pl-5 md:pl-8 w-[100px]">
-                {calculateWorkingHour(staff)}
-              </p>
+              <div className="text-[14px] pl-5 md:pl-8 w-[50px] md:w-[110px] leading-[16px] flex flex-col md:flex-row justify-center items-center">
+                <p>{calculateWorkingHour(staff)}</p>
+                <p className="md:ml-2">({calculateWorkingHour2(staff)})</p>
+              </div>
+
               {/* <p className="pl-3 w-[70px]">Tips: </p> */}
               {/* ////////////////////////////////////////////// */}
-              <p className="pl-2 md:pl-3 w-[100px] border border-black">
+              <p className="ml-7 pl-2 md:pl-3 w-[80px] border border-black">
                 $ {""}
                 {/* {(
                   calculateTipsPerHour() *
