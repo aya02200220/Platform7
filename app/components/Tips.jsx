@@ -65,7 +65,7 @@ export const Staff = ({ tipTotal }) => {
   const initialStaffData = [
     { name: "OPEN 1", time: 5.5, break: 0 },
     { name: "OPEN 2", time: 5.5, break: 0 },
-    { name: "1 SWING", time: 6, break: 0 },
+    { name: "1 SWING", time: 5.5, break: 0 },
     { name: "2 SWING", time: 6, break: 0 },
     { name: "CLOSE 1", time: 7, break: 0 },
     { name: "CLOSE 2", time: 7, break: 0 },
