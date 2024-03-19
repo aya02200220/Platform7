@@ -155,24 +155,24 @@ export const Staff = ({ tipTotal }) => {
     <>
       <div className="mt-6">
         <div className="flex items-center mb-1">
-          <p className="text-[15px] md:text-[16px] w-[80px] ml-[55px] md:ml-[70px] leading-4 text-center break-words">
+          <p className="text-[15px] md:text-[16px] w-[80px] ml-[55px] md:ml-[60px] leading-4 text-center break-words">
             Hour{" "}
             <span className="text-[11px] leading-[5px]">
               <br />
               (30min →0.5)
             </span>
           </p>
-          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[10px] leading-4 break-words flex flex-col items-center">
+          <p className="text-[15px] md:text-[16px] w-[45px] ml-[4px] md:ml-[20px] leading-4 break-words flex flex-col items-center">
             Break
             <span className="text-[11px] leading-[5px]">
               <br />
               (mins)
             </span>
           </p>
-          <p className="text-[14px] md:text-[16px] w-[70px] ml-[10px] md:ml-[20px] leading-3 text-center break-words ">
+          <p className="text-[14px] md:text-[16px] w-[70px] ml-[10px] md:ml-[37px] leading-3 text-center break-words ">
             Working Hour
           </p>
-          <p className="text-[15px] md:text-[16px] w-[50px] ml-[20px] md:ml-[30px] ">
+          <p className="text-[15px] md:text-[16px] w-[50px] ml-[20px] md:ml-[50px] ">
             Tips
           </p>
         </div>
@@ -208,7 +208,7 @@ export const Staff = ({ tipTotal }) => {
                   });
                 }}
               />
-              <div className="text-[14px] pl-5 md:pl-8 w-[50px] md:w-[110px] leading-[16px] flex flex-col md:flex-row justify-center items-center">
+              <div className="text-[14px] md:text-[16px] pl-5 md:pl-8 w-[50px] md:w-[110px] leading-[16px] flex flex-col md:flex-row justify-center items-center">
                 <p>{calculateWorkingHour(staff)}</p>
                 <p className="md:ml-2">({calculateWorkingHour2(staff)})</p>
               </div>
