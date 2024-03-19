@@ -13,45 +13,46 @@ const Tips = () => {
 
   return (
     <>
-      <div className="pt-10 md:pt-3"></div>
-      <div className="border border-black  w-full p-3 ">
-        <div className="flex justify-center mt-2 ">
-          <div className="w-2/5">
-            <div className="flex mb-2">
-              <p className="w-[55px]">Cash</p>
-              {/* Cashの金額を入力するフィールド */}
-              $
-              <input
-                className="ml-1 pl-2 w-[80px]"
-                type="number"
-                step="0.01" // 小数点第2位まで入力可能に
-                value={cashAmount === 0 ? "" : cashAmount} // 入力が0の場合は空文字を表示
-                onChange={(e) => setCashAmount(parseFloat(e.target.value))}
-              />
+      <div className="pt-6 md:pt-3 w-full max-w-[500px]">
+        <div className="border border-black w-full p-3">
+          <div className="flex justify-center mt-2 ">
+            <div className="w-2/5">
+              <div className="flex mb-2">
+                <p className="w-[55px]">Cash</p>
+                {/* Cashの金額を入力するフィールド */}
+                $
+                <input
+                  className="ml-1 pl-2 w-[80px]"
+                  type="number"
+                  step="0.01" // 小数点第2位まで入力可能に
+                  value={cashAmount === 0 ? "" : cashAmount} // 入力が0の場合は空文字を表示
+                  onChange={(e) => setCashAmount(parseFloat(e.target.value))}
+                />
+              </div>
+              <div className="flex">
+                <p className="text-[15px] w-[55px]">Online</p>
+                {/* Onlineの金額を入力するフィールド */}
+                $
+                <input
+                  className="ml-1 pl-2 w-[80px]"
+                  type="number"
+                  step="0.10" // 小数点第2位まで入力可能に
+                  value={onlineAmount === 0 ? "" : onlineAmount} // 入力が0の場合は空文字を表示
+                  onChange={(e) => setOnlineAmount(parseFloat(e.target.value))}
+                />
+              </div>
             </div>
-            <div className="flex">
-              <p className="text-[15px] w-[55px]">Online</p>
-              {/* Onlineの金額を入力するフィールド */}
-              $
-              <input
-                className="ml-1 pl-2 w-[80px]"
-                type="number"
-                step="0.10" // 小数点第2位まで入力可能に
-                value={onlineAmount === 0 ? "" : onlineAmount} // 入力が0の場合は空文字を表示
-                onChange={(e) => setOnlineAmount(parseFloat(e.target.value))}
-              />
+            {/* 合計金額を表示 */}
+            <div className="flex items-center w-3/5">
+              <p className=" ml-4 text-lg leading-5">Tip total:</p>
+              <p className="ml-2 text-2xl border border-b-8 border-b-red-300">
+                $ {calculateTotalAmount()}
+              </p>
             </div>
           </div>
-          {/* 合計金額を表示 */}
-          <div className="flex items-center w-3/5">
-            <p className=" ml-4 text-lg leading-5">Tip total:</p>
-            <p className="ml-2 text-2xl border border-b-8 border-b-red-300">
-              $ {calculateTotalAmount()}
-            </p>
-          </div>
-        </div>
 
-        <Staff tipTotal={calculateTotalAmount()} />
+          <Staff tipTotal={calculateTotalAmount()} />
+        </div>
       </div>
     </>
   );
