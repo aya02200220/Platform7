@@ -18,6 +18,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* .s-input {
+  width: 60px;
+} */
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
