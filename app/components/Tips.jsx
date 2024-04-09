@@ -3,27 +3,24 @@ import React, { useState } from "react";
 import TimeInput from "@/react-time-input/src/timeInput";
 
 const TimeWrapper = ({ initTime, onTimeChange }) => {
-  const [inputValid, setInputValid] = useState(true); // 入力の妥当性を管理するState
-
   const handleTimeChange = (val) => {
     // 入力が5桁未満の場合は入力が未完了とみなし、枠の色を赤色に設定
     if (val.length === 5) {
-      console.log("5桁以上");
       setInputValid(true);
       onTimeChange(val); // 親コンポーネントに時間の変更を通知
     }
   };
 
-  // 入力枠のスタイルを設定するclassName
-  const inputClassName = inputValid
-    ? "s-input -time w-[60px] text-center"
-    : "s-input -time w-[60px] text-center border border-red-500 bg-red-400"; // 入力が未完了の場合は赤色の枠を表示
-
+  // // 入力枠のスタイルを設定するclassName
+  // const inputClassName = inputValid
+  //   ? "s-input -time w-[60px] text-center"
+  //   : "s-input -time w-[60px] text-center border border-red-500 bg-red-400"; // 入力が未完了の場合は赤色の枠を表示
+  // const handleTimeChange = () => {};
   return (
     <TimeInput
-      name="example"
+      name="time"
       initTime={initTime}
-      className={inputClassName}
+      className="s-input -time w-[60px] text-center"
       mountFocus="true"
       onTimeChange={handleTimeChange}
       getCount
@@ -56,6 +53,7 @@ const Tips = () => {
                   type="number"
                   step="0.01" // 小数点第2位まで入力可能に
                   value={cashAmount === 0 ? "" : cashAmount} // 入力が0の場合は空文字を表示
+                  // onChange={(e) => setCashAmount(parseFloat(e.target.value))}
                   onChange={(e) => setCashAmount(parseFloat(e.target.value))}
                 />
               </div>
@@ -161,11 +159,6 @@ export const Staff = ({ tipTotal }) => {
     return (tipTotalNumeric / totalWorkingHours).toFixed(3); // １時間あたりのチップを計算して返す
   };
 
-  // 小数点第2位を5区切りで丸める関数
-  const roundToNearest5Cents = (value) => {
-    return Math.ceil(value * 20) / 20;
-  };
-
   return (
     <>
       <div className="mt-6">
@@ -199,6 +192,7 @@ export const Staff = ({ tipTotal }) => {
               {/* d////////////////////////////////////////////////////////////////////// */}
               {/* d////////////////////////////////////////////////////////////////////// */}
               {/* d////////////////////////////////////////////////////////////////////// */}
+              <input type="number" className="w-[50px] mr-2" />
 
               <TimeWrapper
                 initTime={staff.time}
@@ -206,7 +200,7 @@ export const Staff = ({ tipTotal }) => {
                   setStaffData((prevData) => {
                     return prevData.map((item, idx) => {
                       if (idx === index) {
-                        return { ...item, time: newTime }; // 新しい時間を設定
+                        return { ...item, time: newTime };
                       }
                       return item;
                     });
