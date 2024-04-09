@@ -227,8 +227,7 @@ export const Staff = ({ tipTotal }) => {
               <p className="ml-7 pl-2 md:pl-3 w-[80px] border border-black">
                 $ {""}
                 {(
-                  calculateTipsPerHour() *
-                  (staff.time - (staff.break > 0 ? staff.break : 0) / 60)
+                  calculateTipsPerHour() * calculateWorkingHour2(staff)
                 ).toFixed(2)}
               </p>
             </div>
