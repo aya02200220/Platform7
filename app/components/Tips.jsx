@@ -3,19 +3,30 @@ import React, { useState } from "react";
 import TimeInput from "@/react-time-input/src/timeInput";
 
 const TimeWrapper = ({ initTime, onTimeChange }) => {
+  const [inputValid, setInputValid] = useState(true); // 入力の妥当性を管理するState
+
   const handleTimeChange = (val) => {
+    // 入力が5桁未満の場合は入力が未完了とみなし、枠の色を赤色に設定
     if (val.length === 5) {
+      console.log("5桁以上");
+      setInputValid(true);
       onTimeChange(val); // 親コンポーネントに時間の変更を通知
     }
   };
+
+  // 入力枠のスタイルを設定するclassName
+  const inputClassName = inputValid
+    ? "s-input -time w-[60px] text-center"
+    : "s-input -time w-[60px] text-center border border-red-500 bg-red-400"; // 入力が未完了の場合は赤色の枠を表示
 
   return (
     <TimeInput
       name="example"
       initTime={initTime}
-      className="s-input -time w-[60px] text-center"
+      className={inputClassName}
       mountFocus="true"
       onTimeChange={handleTimeChange}
+      getCount
     />
   );
 };
@@ -190,7 +201,7 @@ export const Staff = ({ tipTotal }) => {
               {/* d////////////////////////////////////////////////////////////////////// */}
 
               <TimeWrapper
-                initTime={staff.time} // 分を時間形式に変換
+                initTime={staff.time}
                 onTimeChange={(newTime) => {
                   setStaffData((prevData) => {
                     return prevData.map((item, idx) => {
