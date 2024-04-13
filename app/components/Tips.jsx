@@ -67,14 +67,14 @@ export default Tips;
 export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "OPEN 1", time: "0630", break: 0 },
-    { name: "OPEN 2", time: "0630", break: 0 },
-    { name: "1 SWING", time: "0530", break: 0 },
-    { name: "2 SWING", time: "0600", break: 0 },
-    { name: "CLOSE 1", time: "0700", break: 0 },
-    { name: "CLOSE 2", time: "0700", break: 0 },
-    { name: "KITCHEN", time: "0700", break: 0 },
-    { name: "OTHER 1", time: "", break: 0 },
+    { name: "OPEN 1", time: "0630", break: 0, bgColor: "" },
+    { name: "OPEN 2", time: "0630", break: 0, bgColor: "" },
+    { name: "1 SWING", time: "0530", break: 0, bgColor: "" },
+    { name: "2 SWING", time: "0600", break: 0, bgColor: "" },
+    { name: "CLOSE 1", time: "0700", break: 0, bgColor: "" },
+    { name: "CLOSE 2", time: "0700", break: 0, bgColor: "" },
+    { name: "KITCHEN", time: "0700", break: 0, bgColor: "" },
+    { name: "OTHER 1", time: "", break: 0, bgColor: "" },
   ];
 
   // スタッフのデータを管理するState
@@ -163,97 +163,8 @@ export const Staff = ({ tipTotal }) => {
             <div className="flex items-center mb-2 ">
               <p className="pr-1 md:pr-3 w-[70px] text-[12px]">{staff.name}</p>
 
-              {/* <PatternFormat
-                className="w-[60px] pl-2"
-                format="##:##"
-                valueIsNumericString={true}
-                value={staff.time.toString()}
-                onChange={(e) => {
-                  const inputVal = e.target.value;
-                  const hours = parseInt(inputVal.substring(0, 2), 10);
-                  const minutes = parseInt(inputVal.substring(3), 10);
-
-                  // 時間と分が正しい範囲内であることを確認
-                  if (
-                    inputVal.substring(3, 5).toString().trim().length === 2 &&
-                    !isNaN(hours) &&
-                    !isNaN(minutes) &&
-                    hours >= 0 &&
-                    hours < 24 &&
-                    minutes >= 0 &&
-                    minutes < 60
-                  ) {
-                    // console.log("hours1:", hours, minutes);
-                    const formattedHours = hours.toString().padStart(2, "0");
-                    const formattedMinutes = minutes
-                      .toString()
-                      .padStart(2, "0");
-
-                    // console.log("hours2:", formattedHours, formattedMinutes);
-                    const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
-
-                    setStaffData((prevData) => {
-                      const newData = [...prevData];
-                      newData[index].time = newValue;
-                      return newData;
-                    });
-                  }
-                }}
-              /> */}
-
-              {/* <PatternFormat
-                // className={`w-[60px] pl-2  bg-red-200`}
-                className={`w-[60px] pl-2 ${
-                  unDoneFlg
-                    ? "" // 背景色を赤色に設定
-                    : "bg-red-200" // 背景色をデフォルトに設定
-                }
-                `}
-                format="##:##"
-                valueIsNumericString={true}
-                value={staff.time.toString()}
-                onChange={(e) => {
-                  const inputVal = e.target.value;
-                  const hours = parseInt(inputVal.substring(0, 2), 10);
-                  const minutes = parseInt(inputVal.substring(3), 10);
-
-                  const unDoneFlg =
-                    inputVal.substring(3, 5).toString().trim().length < 2;
-
-                  console.log(
-                    "分の長さ",
-                    inputVal.substring(3, 5).toString().trim().length,
-                    unDoneFlg
-                  );
-
-                  // 時間と分が正しい範囲内であることを確認
-                  if (
-                    inputVal.substring(3, 5).toString().trim().length === 2 &&
-                    !isNaN(hours) &&
-                    !isNaN(minutes) &&
-                    hours >= 0 &&
-                    hours < 24 &&
-                    minutes >= 0 &&
-                    minutes < 60
-                  ) {
-                    const formattedHours = hours.toString().padStart(2, "0");
-                    const formattedMinutes = minutes
-                      .toString()
-                      .padStart(2, "0");
-
-                    const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
-
-                    setStaffData((prevData) => {
-                      const newData = [...prevData];
-                      newData[index].time = newValue;
-                      return newData;
-                    });
-                  }
-                }}
-              /> */}
-
               <PatternFormat
-                className={`w-[60px] pl-2 ${bgColor}`}
+                className={`w-[60px] pl-2 ${staff.bgColor}`}
                 format="##:##"
                 valueIsNumericString={true}
                 value={staff.time.toString()}
@@ -262,13 +173,8 @@ export const Staff = ({ tipTotal }) => {
                   const hours = parseInt(inputVal.substring(0, 2), 10);
                   const minutes = parseInt(inputVal.substring(3), 10);
 
-                  let newBgColor = ""; // 新しい背景色を一旦初期化
-
-                  // 背景色の条件をチェック
-                  if (inputVal && inputVal.substring(3, 5).trim().length < 2) {
-                    newBgColor = "bg-red-200"; // 赤色の背景色
-                  }
                   if (
+                    (inputVal && inputVal.substring(3, 5).trim().length < 2) ||
                     isNaN(hours) ||
                     isNaN(minutes) ||
                     hours < 0 ||
@@ -276,7 +182,14 @@ export const Staff = ({ tipTotal }) => {
                     minutes < 0 ||
                     minutes >= 60
                   ) {
-                    newBgColor = "bg-red-200"; // 赤色の背景色
+                    const newStaffData = [...staffData];
+                    newStaffData[index].bgColor = "bg-red-200";
+                    setStaffData(newStaffData);
+                  } else {
+                    // エラーの場合は背景色を赤に変更
+                    const newStaffData = [...staffData];
+                    newStaffData[index].bgColor = "";
+                    setStaffData(newStaffData);
                   }
 
                   // 時間と分が正しい範囲内であることを確認
@@ -303,7 +216,7 @@ export const Staff = ({ tipTotal }) => {
                     });
                   }
 
-                  setBgColor(newBgColor); // 背景色を更新
+                  // setBgColor(newBgColor); // 背景色を更新
                 }}
               />
 
