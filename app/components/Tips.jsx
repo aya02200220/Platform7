@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { PatternFormat } from "react-number-format";
 import { NumericFormat } from "react-number-format";
 
