@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import { PatternFormat } from "react-number-format";
+import { NumericFormat } from "react-number-format";
 
 const Tips = () => {
   // Stateを設定してCashとOnlineの金額を管理する
@@ -21,11 +23,12 @@ const Tips = () => {
                 <p className="w-[55px]">Cash</p>
                 {/* Cashの金額を入力するフィールド */}
                 $
-                <input
+                <NumericFormat
+                  decimalScale={2}
+                  fixedDecimalScale
                   className="ml-1 pl-2 w-[80px]"
-                  type="number"
-                  step="0.01" // 小数点第2位まで入力可能に
-                  value={cashAmount === 0 ? "" : cashAmount} // 入力が0の場合は空文字を表示
+                  valueIsNumericString={true}
+                  value={cashAmount === 0 ? "" : cashAmount}
                   onChange={(e) => setCashAmount(parseFloat(e.target.value))}
                 />
               </div>
@@ -33,10 +36,11 @@ const Tips = () => {
                 <p className="text-[15px] w-[55px]">Online</p>
                 {/* Onlineの金額を入力するフィールド */}
                 $
-                <input
+                <NumericFormat
+                  decimalScale={2}
+                  fixedDecimalScale
                   className="ml-1 pl-2 w-[80px]"
-                  type="number"
-                  step="0.10" // 小数点第2位まで入力可能に
+                  valueIsNumericString={true}
                   value={onlineAmount === 0 ? "" : onlineAmount} // 入力が0の場合は空文字を表示
                   onChange={(e) => setOnlineAmount(parseFloat(e.target.value))}
                 />
@@ -63,64 +67,44 @@ export default Tips;
 export const Staff = ({ tipTotal }) => {
   // スタッフ情報の初期値を設定
   const initialStaffData = [
-    { name: "OPEN 1", time: 6.5, break: 0 },
-    { name: "OPEN 2", time: 6.5, break: 0 },
-    { name: "1 SWING", time: 5.5, break: 0 },
-    { name: "2 SWING", time: 6, break: 0 },
-    { name: "CLOSE 1", time: 7, break: 0 },
-    { name: "CLOSE 2", time: 7, break: 0 },
-    { name: "KITCHEN", time: 7, break: 0 },
-    { name: "OTHER 1", time: 0, break: 0 },
+    { name: "OPEN 1", time: "0630", break: 0 },
+    { name: "OPEN 2", time: "0630", break: 0 },
+    { name: "1 SWING", time: "0530", break: 0 },
+    { name: "2 SWING", time: "0600", break: 0 },
+    { name: "CLOSE 1", time: "0700", break: 0 },
+    { name: "CLOSE 2", time: "0700", break: 0 },
+    { name: "KITCHEN", time: "0700", break: 0 },
+    { name: "OTHER 1", time: "", break: 0 },
   ];
 
   // スタッフのデータを管理するState
   const [staffData, setStaffData] = useState(initialStaffData);
 
-  // 労働時間を計算する関数
-  // const calculateWorkingHour = (staff) => {
-  //   const workingHour = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
-  //   return workingHour.toFixed(2); // 労働時間を小数点第2位まで表示
-  // };
-
-  // 労働時間を計算する関数
-  // const calculateWorkingHour = (staff) => {
-  //   const BK = staff.break > 0 ? staff.break : 0;
-
-  //   const workingHourAfterBK = staff.time - BK; // breakを時間に変換して労働時間から引く
-  //   const workingHours = Math.floor(workingHourAfterBK); // 整数部分（時間）を取得
-  //   let minutes = Math.round((workingHourAfterBK - workingHours) * 60); // 小数部分（分）を取得
-
-  //   if (workingHours === 0 && minutes === 0) {
-  //     return "-";
-  //   } else {
-  //     if (minutes < 10) {
-  //       minutes = `0${minutes}`;
-  //     }
-  //     return `${workingHours}:${minutes}`; // 時間と分を連結して返す
-  //   }
-  // };
-  // 労働時間を計算する関数
   const calculateWorkingHour = (staff) => {
+    // 時間と分を分割
+    const hours = Math.floor(staff.time / 100); // 先頭の2桁が時間
+    const minutes = staff.time % 100; // 末尾の2桁が分
+
     const BK = staff.break > 0 ? staff.break : 0;
+    const totalMinutes = hours * 60 + minutes - BK; // 全時間を分に変換し、休憩時間を引く
 
-    // const workingHourAfterBK = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
-    const workingHourAfterBK = staff.time - BK / 60; // breakを時間に変換して労働時間から引く
-    const workingHours = Math.floor(workingHourAfterBK); // 整数部分（時間）を取得
-    let minutes = Math.round((workingHourAfterBK - workingHours) * 60); // 小数部分（分）を取得
+    const workingHours = Math.floor(totalMinutes / 60); // 完全な時間
+    let remainingMinutes = totalMinutes % 60; // 残りの分
 
-    if (workingHours === 0 && minutes === 0) {
+    if (workingHours === 0 && remainingMinutes === 0) {
       return "-";
     } else {
-      if (minutes < 10) {
-        minutes = `0${minutes}`;
+      if (remainingMinutes < 10) {
+        remainingMinutes = `0${remainingMinutes}`;
       }
-      return `${workingHours}:${minutes}`; // 時間と分を連結して返す
+      return `${workingHours}:${remainingMinutes}`; // 時間と分を連結して返す
     }
   };
 
-  // 労働時間を計算する関数
   const calculateWorkingHour2 = (staff) => {
-    const workingHour = staff.time - staff.break / 60; // breakを時間に変換して労働時間から引く
+    const hours = Math.floor(staff.time / 100);
+    const minutes = staff.time % 100;
+    const workingHour = hours + minutes / 60 - staff.break / 60; // breakを時間に変換して労働時間から引く
     return workingHour.toFixed(2); // 労働時間を小数点第2位まで表示
   };
 
@@ -128,11 +112,15 @@ export const Staff = ({ tipTotal }) => {
   const calculateTotalWorkingHour = () => {
     let totalWorkingHour = 0;
     staffData.forEach((staff) => {
-      const BK = staff.break > 0 ? staff.break : 0;
+      const timeStr = staff.time.toString().padStart(4, "0"); // 例: '730' -> '0730'
+      const hours = parseInt(timeStr.substring(0, 2), 10); // 時間を取得
+      const minutes = parseInt(timeStr.substring(2, 4), 10); // 分を取得
+      const totalHours = hours + minutes / 60; // 分を時間に変換
 
-      totalWorkingHour += staff.time - BK / 60;
+      const BK = staff.break > 0 ? staff.break / 60 : 0; // 休憩時間を時間に変換
+      totalWorkingHour += totalHours - BK; // 合計労働時間に加算
     });
-    return totalWorkingHour.toFixed(2); // 合計労働時間を小数点第2位まで表示
+    return totalWorkingHour.toFixed(1); // 小数点第1位まで表示
   };
 
   // 合計チップを合計労働時間で割って１時間あたりのチップを計算する関数
@@ -145,11 +133,6 @@ export const Staff = ({ tipTotal }) => {
     }
 
     return (tipTotalNumeric / totalWorkingHourNumeric).toFixed(3);
-  };
-
-  // 小数点第2位を5区切りで丸める関数
-  const roundToNearest5Cents = (value) => {
-    return Math.ceil(value * 20) / 20;
   };
 
   return (
@@ -181,11 +164,12 @@ export const Staff = ({ tipTotal }) => {
           <div key={index}>
             <div className="flex items-center mb-2 ">
               <p className="pr-1 md:pr-3 w-[70px] text-[12px]">{staff.name}</p>
-              <input
+
+              <PatternFormat
                 className="w-[60px] pl-2"
-                type="number"
-                step="0.25"
+                format="##:##"
                 value={staff.time}
+                valueIsNumericString={true}
                 onChange={(e) => {
                   const newValue = parseFloat(e.target.value);
                   setStaffData((prevData) => {
@@ -195,6 +179,7 @@ export const Staff = ({ tipTotal }) => {
                   });
                 }}
               />
+
               <input
                 className="w-[50px] pl-3 ml-2 md:ml-7"
                 type="number"
@@ -214,18 +199,15 @@ export const Staff = ({ tipTotal }) => {
                 <p className="md:ml-2">({calculateWorkingHour2(staff)})</p>
               </div>
 
-              {/* <p className="pl-3 w-[70px]">Tips: </p> */}
-              {/* ////////////////////////////////////////////// */}
               <p className="ml-7 pl-2 md:pl-3 w-[80px] border border-black">
                 $ {""}
+                {(
+                  calculateTipsPerHour() * calculateWorkingHour2(staff)
+                ).toFixed(2)}
                 {/* {(
                   calculateTipsPerHour() *
-                  (staff.time - staff.break / 60)
-                ).toFixed(2)} */}
-                {(
-                  calculateTipsPerHour() *
                   (staff.time - (staff.break > 0 ? staff.break : 0) / 60)
-                ).toFixed(2)}
+                ).toFixed(2)} */}
               </p>
             </div>
           </div>
