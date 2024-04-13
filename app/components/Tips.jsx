@@ -135,6 +135,8 @@ export const Staff = ({ tipTotal }) => {
     return (tipTotalNumeric / totalWorkingHourNumeric).toFixed(3);
   };
 
+  const [bgColor, setBgColor] = useState(""); // 背景色を管理するステート変数
+
   return (
     <>
       <div className="mt-6">
@@ -161,7 +163,7 @@ export const Staff = ({ tipTotal }) => {
             <div className="flex items-center mb-2 ">
               <p className="pr-1 md:pr-3 w-[70px] text-[12px]">{staff.name}</p>
 
-              <PatternFormat
+              {/* <PatternFormat
                 className="w-[60px] pl-2"
                 format="##:##"
                 valueIsNumericString={true}
@@ -181,13 +183,13 @@ export const Staff = ({ tipTotal }) => {
                     minutes >= 0 &&
                     minutes < 60
                   ) {
-                    console.log("hours1:", hours, minutes);
+                    // console.log("hours1:", hours, minutes);
                     const formattedHours = hours.toString().padStart(2, "0");
                     const formattedMinutes = minutes
                       .toString()
                       .padStart(2, "0");
 
-                    console.log("hours2:", formattedHours, formattedMinutes);
+                    // console.log("hours2:", formattedHours, formattedMinutes);
                     const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
 
                     setStaffData((prevData) => {
@@ -196,6 +198,112 @@ export const Staff = ({ tipTotal }) => {
                       return newData;
                     });
                   }
+                }}
+              /> */}
+
+              {/* <PatternFormat
+                // className={`w-[60px] pl-2  bg-red-200`}
+                className={`w-[60px] pl-2 ${
+                  unDoneFlg
+                    ? "" // 背景色を赤色に設定
+                    : "bg-red-200" // 背景色をデフォルトに設定
+                }
+                `}
+                format="##:##"
+                valueIsNumericString={true}
+                value={staff.time.toString()}
+                onChange={(e) => {
+                  const inputVal = e.target.value;
+                  const hours = parseInt(inputVal.substring(0, 2), 10);
+                  const minutes = parseInt(inputVal.substring(3), 10);
+
+                  const unDoneFlg =
+                    inputVal.substring(3, 5).toString().trim().length < 2;
+
+                  console.log(
+                    "分の長さ",
+                    inputVal.substring(3, 5).toString().trim().length,
+                    unDoneFlg
+                  );
+
+                  // 時間と分が正しい範囲内であることを確認
+                  if (
+                    inputVal.substring(3, 5).toString().trim().length === 2 &&
+                    !isNaN(hours) &&
+                    !isNaN(minutes) &&
+                    hours >= 0 &&
+                    hours < 24 &&
+                    minutes >= 0 &&
+                    minutes < 60
+                  ) {
+                    const formattedHours = hours.toString().padStart(2, "0");
+                    const formattedMinutes = minutes
+                      .toString()
+                      .padStart(2, "0");
+
+                    const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
+
+                    setStaffData((prevData) => {
+                      const newData = [...prevData];
+                      newData[index].time = newValue;
+                      return newData;
+                    });
+                  }
+                }}
+              /> */}
+
+              <PatternFormat
+                className={`w-[60px] pl-2 ${bgColor}`}
+                format="##:##"
+                valueIsNumericString={true}
+                value={staff.time.toString()}
+                onChange={(e) => {
+                  const inputVal = e.target.value; // inputValを定義
+                  const hours = parseInt(inputVal.substring(0, 2), 10);
+                  const minutes = parseInt(inputVal.substring(3), 10);
+
+                  let newBgColor = ""; // 新しい背景色を一旦初期化
+
+                  // 背景色の条件をチェック
+                  if (inputVal && inputVal.substring(3, 5).trim().length < 2) {
+                    newBgColor = "bg-red-200"; // 赤色の背景色
+                  }
+                  if (
+                    isNaN(hours) ||
+                    isNaN(minutes) ||
+                    hours < 0 ||
+                    hours >= 24 ||
+                    minutes < 0 ||
+                    minutes >= 60
+                  ) {
+                    newBgColor = "bg-red-200"; // 赤色の背景色
+                  }
+
+                  // 時間と分が正しい範囲内であることを確認
+                  if (
+                    inputVal.substring(3, 5).toString().trim().length === 2 &&
+                    !isNaN(hours) &&
+                    !isNaN(minutes) &&
+                    hours >= 0 &&
+                    hours < 24 &&
+                    minutes >= 0 &&
+                    minutes < 60
+                  ) {
+                    const formattedHours = hours.toString().padStart(2, "0");
+                    const formattedMinutes = minutes
+                      .toString()
+                      .padStart(2, "0");
+
+                    const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
+
+                    setStaffData((prevData) => {
+                      const newData = [...prevData];
+                      newData[index].time = newValue;
+                      return newData;
+                    });
+                  }
+
+                  setBgColor(newBgColor); // 背景色を更新
                 }}
               />
 
