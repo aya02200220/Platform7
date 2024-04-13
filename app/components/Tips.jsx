@@ -168,15 +168,38 @@ export const Staff = ({ tipTotal }) => {
               <PatternFormat
                 className="w-[60px] pl-2"
                 format="##:##"
-                value={staff.time}
                 valueIsNumericString={true}
+                value={staff.time.toString()}
                 onChange={(e) => {
-                  const newValue = parseFloat(e.target.value);
-                  setStaffData((prevData) => {
-                    const newData = [...prevData];
-                    newData[index].time = newValue;
-                    return newData;
-                  });
+                  const inputVal = e.target.value;
+                  const hours = parseInt(inputVal.substring(0, 2), 10);
+                  const minutes = parseInt(inputVal.substring(3), 10);
+
+                  // 時間と分が正しい範囲内であることを確認
+                  if (
+                    inputVal.substring(3, 5).toString().trim().length === 2 &&
+                    !isNaN(hours) &&
+                    !isNaN(minutes) &&
+                    hours >= 0 &&
+                    hours < 24 &&
+                    minutes >= 0 &&
+                    minutes < 60
+                  ) {
+                    console.log("hours1:", hours, minutes);
+                    const formattedHours = hours.toString().padStart(2, "0");
+                    const formattedMinutes = minutes
+                      .toString()
+                      .padStart(2, "0");
+
+                    console.log("hours2:", formattedHours, formattedMinutes);
+                    const newValue = `${formattedHours}${formattedMinutes}`; // HHmm 形式の文字列
+
+                    setStaffData((prevData) => {
+                      const newData = [...prevData];
+                      newData[index].time = newValue;
+                      return newData;
+                    });
+                  }
                 }}
               />
 
@@ -198,16 +221,11 @@ export const Staff = ({ tipTotal }) => {
                 <p>{calculateWorkingHour(staff)}</p>
                 <p className="md:ml-2">({calculateWorkingHour2(staff)})</p>
               </div>
-
               <p className="ml-7 pl-2 md:pl-3 w-[80px] border border-black">
                 $ {""}
                 {(
                   calculateTipsPerHour() * calculateWorkingHour2(staff)
                 ).toFixed(2)}
-                {/* {(
-                  calculateTipsPerHour() *
-                  (staff.time - (staff.break > 0 ? staff.break : 0) / 60)
-                ).toFixed(2)} */}
               </p>
             </div>
           </div>
