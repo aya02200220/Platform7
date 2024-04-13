@@ -120,7 +120,7 @@ export const Staff = ({ tipTotal }) => {
       const BK = staff.break > 0 ? staff.break / 60 : 0; // 休憩時間を時間に変換
       totalWorkingHour += totalHours - BK; // 合計労働時間に加算
     });
-    return totalWorkingHour.toFixed(1); // 小数点第1位まで表示
+    return totalWorkingHour.toFixed(2); // 小数点第1位まで表示
   };
 
   // 合計チップを合計労働時間で割って１時間あたりのチップを計算する関数
