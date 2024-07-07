@@ -139,7 +139,7 @@ export const Staff = ({ tipTotal }) => {
 
   return (
     <>
-      <div className="mt-6">
+      <div className="mt-6 flex flex-col items-center">
         <div className="flex items-center mb-1">
           <p className="text-[15px] md:text-[16px] w-[80px] ml-[55px] md:ml-[60px] leading-3 text-center break-words">
             Hour{" "}
@@ -247,7 +247,7 @@ export const Staff = ({ tipTotal }) => {
             </div>
           </div>
         ))}
-        <div className="flex items-center mt-5 md:mt-8 h-[60px] md:h-[40px] pl-2 md:pl-14 border border-black">
+        <div className="flex items-center mt-5 md:mt-8 h-[60px] md:h-[40px] px-2 border border-black">
           <p className="text-[16px] leading-3">
             Total Hour:
             <span className="text-lg font-bold pl-4 pr-1 underline">
