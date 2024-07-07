@@ -15,10 +15,10 @@ const Tips = () => {
 
   return (
     <>
-      <div className="pt-6 md:pt-3 w-full max-w-[500px]">
-        <div className="border border-black w-full p-3">
-          <div className="flex justify-center mt-2 ">
-            <div className="w-2/5">
+      <div className="pt-6 md:pt-3 w-full max-w-[600px] ">
+        <div className="border border-black w-full p-3 flex flex-col ">
+          <div className="flex justify-center mt-2 w-full ">
+            <div className="w-2/5 ">
               <div className="flex mb-2">
                 <p className="w-[55px]">Cash</p>
                 {/* Cashの金額を入力するフィールド */}

@@ -1,18 +1,20 @@
-import React from "react";
+"use client";
 
-function getCurrentDate() {
-  const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    weekday: "long",
-  };
-  const today = new Date();
-  return today.toLocaleDateString("en-US", options);
-}
+import React, { useState, useEffect } from "react";
 
 function CurrentDate() {
-  const currentDate = getCurrentDate();
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      weekday: "long",
+    };
+    const today = new Date();
+    setCurrentDate(today.toLocaleDateString("en-US", options));
+  }, []);
 
   return (
     <div>
