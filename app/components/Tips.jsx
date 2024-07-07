@@ -15,7 +15,10 @@ const Tips = () => {
 
   return (
     <>
-      <div className="pt-6 md:pt-3 w-full max-w-[600px] ">
+      <p className=" underline underline-offset-4 mt-4 text-[#e26b6b] ">
+        * You can skip typing " : " !
+      </p>
+      <div className="pt-2 md:pt-3 w-full max-w-[600px] ">
         <div className="border border-black w-full p-3 flex flex-col ">
           <div className="flex justify-center mt-2 w-full ">
             <div className="w-2/5 ">
